@@ -62,7 +62,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	// Read attendance data
-	attendances, err := readAttendance("../../attendance.csv")
+	attendances, err := readAttendance("../../../transform/data/raw_attendance.csv")
 	if err != nil {
 		log.Fatalf("Error reading attendance: %v", err)
 	}
@@ -71,7 +71,7 @@ func main() {
 	feedback := generateFeedback(attendances)
 
 	// Write feedback to CSV
-	err = writeFeedback(feedback, "../../feedback.csv")
+	err = writeFeedback(feedback, "../../../transform/data/raw_feedback.csv")
 	if err != nil {
 		log.Fatalf("Error writing feedback: %v", err)
 	}

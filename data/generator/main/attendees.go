@@ -20,7 +20,7 @@ var (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	file, err := os.OpenFile("../../attendees.csv", os.O_RDWR, os.ModeAppend)
+	file, err := os.OpenFile("../../../transform/data/raw_attendees.csv", os.O_RDWR, os.ModeAppend)
 	if err != nil {
 		panic(err)
 	}

@@ -33,13 +33,13 @@ type AttendanceLog struct {
 
 func main() {
 	// Read attendees
-	attendees, err := readAttendees("../../attendees.csv")
+	attendees, err := readAttendees("../../../transform/data/raw_attendees.csv")
 	if err != nil {
 		log.Fatalf("Error reading attendees: %v", err)
 	}
 
 	// Read sessions
-	sessions, err := readSessions("../../sessions.csv")
+	sessions, err := readSessions("../../../transform/data/raw_sessions.csv")
 	if err != nil {
 		log.Fatalf("Error reading sessions: %v", err)
 	}
@@ -48,7 +48,7 @@ func main() {
 	logs := generateAttendanceLogs(attendees, sessions)
 
 	// Write attendance logs
-	err = writeAttendanceLogs(logs, "../../attendance.csv")
+	err = writeAttendanceLogs(logs, "../../../transform/data/raw_attendance.csv")
 	if err != nil {
 		log.Fatalf("Error writing attendance logs: %v", err)
 	}
