@@ -3,7 +3,7 @@
 with
 
 source as (
-    select * from {{ source('conf', 'raw_feedback') }}
+    select * from {{ source('conf', 'feedback') }}
 ),
 
 renamed as (

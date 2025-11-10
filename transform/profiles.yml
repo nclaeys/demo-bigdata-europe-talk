@@ -8,6 +8,7 @@ default:
         - httpfs
         - parquet
     local:
+      external_root: "output"
       type: duckdb
       path: 'dbt.duckdb'
       threads: 1

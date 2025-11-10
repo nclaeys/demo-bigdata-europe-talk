@@ -1,0 +1,19 @@
+{{ config(materialized='external') }}
+
+WITH
+  sessions as (
+    select * from {{ ref('stg_sessions') }}
+),
+    feedback as (
+        select * from {{ ref('stg_feedback') }}
+    )
+
+SELECT
+    AVG(f.rating),
+    MAX(f.rating),
+    MIN(f.rating),
+    track
+from sessions s
+         join feedback f on f.session_id = s.session_id
+where s.track is not null
+group by s.track

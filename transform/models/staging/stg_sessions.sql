@@ -3,18 +3,18 @@
 with
 
 source as (
-    select * from {{ source('conf', 'raw_sessions') }}
+    select * from {{ source('conf', 'sessions') }}
 ),
 
 renamed as (
 
     select
         Id as session_id,
-        Title,
-        Track,
-        Start Time,
-        Description,
-        Speakers
+        Title as title,
+        Track as track,
+        "Start Time" as start_time,
+        Description as description,
+        Speakers as speakers
     from source
 
 )
