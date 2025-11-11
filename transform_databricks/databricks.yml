@@ -1,0 +1,12 @@
+bundle:
+  name: dbt
+
+include:
+  - bundles/*.yml
+  - ../../targets.yaml
+
+variables:
+  # Compute variables
+  warehouse_id:
+    description: id of sql warehouse to use for the job
+    default: id_unset

@@ -1,0 +1,26 @@
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    default: true
+    presets:
+      name_prefix: ${bundle.target} # prefix all resource names with dev_ or qa_
+    workspace:
+      host: https://adb-1366372737668997.17.azuredatabricks.net
+
+  qa:
+    mode: production
+    presets:
+      name_prefix: ${bundle.target} # prefix all resource names with dev_ or qa_
+    run_as:
+      user_name: ${var.user_name}
+    permissions:
+      - level: CAN_MANAGE
+        user_name: ${var.user_name}
+      - level: CAN_MANAGE
+        group_name: ${var.group_name}
+    workspace:
+      host: https://adb-1366372737668997.17.azuredatabricks.net

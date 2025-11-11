@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: conf
+    schema: "raw"
+    description: Conference input data
+    tables:
+      - name: attendance
+        description: One record per attendee per session
+      - name: sessions
+        description: One record per session on the Bigdata Vilnius 2025 agenda
+      - name: feedback
+        description: One record per feedback submission per session
+      - name: attendees
+        description: One record per attendee

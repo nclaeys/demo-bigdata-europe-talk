@@ -1,0 +1,17 @@
+default:
+  target: dev
+
+  # host = URL of the databricks workspace. e.g. https://adb-xxx.azuredatabricks.net
+  # http_path = http path of the sql warehouse. e.g. /sql/1.0/warehouses/xxx
+  # token = generated personal acces token. e.g. dapixxx
+  #host, http_path and token are filled with environment variables, which are set by the CICD process or by your local environment variables (dev only)
+
+  outputs:
+    dev:
+      host: https://adb-1366372737668997.17.azuredatabricks.net  # This cannot be set with an environment variable.
+      http_path: /sql/1.0/warehouses/73b9aa9aa1fa4bc6 # SQL warehouse configuration
+      token: "{{ env_var('DBT_ENV_SECRET_DBX_TOKEN','not-set') }}"
+      schema: "{{ env_var('DBT_ENV_TARGET') }}"
+      type: databricks
+      name: dev
+      catalog: bigdataconf

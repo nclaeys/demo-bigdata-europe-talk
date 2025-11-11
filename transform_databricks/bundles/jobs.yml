@@ -1,0 +1,25 @@
+resources:
+  jobs:
+    sample_job:
+      name: sample_dbt_job
+      schedule:
+        # Run every day at 6:00 AM
+        quartz_cron_expression: '44 00 6 * * ?'
+        timezone_id: Europe/Amsterdam
+
+      environments:
+        - environment_key: dbt
+          spec:
+            client: "2"
+            dependencies:
+              - "dbt-databricks"
+
+      tasks:
+        - task_key: transform
+          dbt_task:
+            project_directory: ./databricks_conf_analysis
+            target: ${bundle.target}
+            commands:
+            - 'dbt deps'
+            - "dbt run"
+          environment_key: dbt

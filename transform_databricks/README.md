@@ -1,0 +1,145 @@
+# DBT on Databricks
+
+## Setup
+
+### Prerequisites
+
+Before getting started, ensure you have the following tools installed:
+- [Databricks CLI](https://docs.databricks.com/dev-tools/cli/index.html)
+- [dbt-databricks](https://docs.getdbt.com/reference/warehouse-setups/databricks-setup) adapter
+- [UV](https://docs.astral.sh/uv/) package manager (recommended) or Python 3.8+
+
+### Authentication
+
+Start by installing the Databricks CLI if you haven't already, then authenticate to your workspace:
+
+```bash
+# Authenticate with Databricks
+databricks auth login
+```
+
+Verify your authentication is working correctly:
+
+```bash
+# Check available authentication profiles
+databricks auth profiles
+```
+
+### dbt Connection Test
+
+Test your dbt connection to ensure everything is configured correctly:
+
+```bash
+# Test dbt connection (when using UV)
+uv run dbt debug --project-dir dbt_project
+
+# Or if using pip/conda
+dbt debug --project-dir dbt_project
+```
+
+This command will validate your connection to Databricks and confirm that all dependencies are properly installed.
+
+## Running dbt from local pc
+
+### Local Development Workflow
+
+You can execute dbt transformations directly from your local machine, which is ideal for development and testing:
+
+```bash
+# Run all dbt models
+uv run dbt run --project-dir dbt_project
+
+# Run specific models
+uv run dbt run --project-dir dbt_project --select model_name
+
+# Run models with full refresh
+uv run dbt run --project-dir dbt_project --full-refresh
+
+# Test data quality
+uv run dbt test --project-dir dbt_project
+
+# Generate documentation
+uv run dbt docs generate --project-dir dbt_project
+```
+
+### Authentication Method
+
+Local development uses **Personal Access Token (PAT)** authentication for secure connection to Databricks. Ensure your PAT token is properly configured in your environment variables.
+
+### Data Source Configuration
+
+If the source data hasn't been set up yet or you need to point to different source tables, update the catalog references in the `sources.yml` file located in the dbt project directory. This allows you to switch between different data environments seamlessly.
+
+## Working with asset bundles
+
+### Target Environments
+
+This project is configured with the following deployment targets:
+
+#### Development Target (`dev`)
+- **Purpose**: Local development and testing
+- **Asset Naming**: All assets are prefixed with `dev`
+- **Job Scheduling**: Jobs are **not** scheduled to run automatically
+- **Usage**: Ideal for experimentation and iterative development
+
+#### Quality Assurance Target (`qa`)
+- **Purpose**: Pre-production validation and stakeholder review
+- **Asset Naming**: All assets are prefixed with `qa`
+- **Job Scheduling**: Jobs are **scheduled** to run automatically
+- **Usage**: Final validation before production deployment
+
+### Data Architecture
+
+**Schema-Level Data Separation**: Data isolation between environments is implemented at the schema level, ensuring clear boundaries between development, testing, and production data while maintaining consistent data structures.
+
+### Project Configuration
+
+The deployment targets are centrally defined in the `targets.yaml` file at the project root level, providing a single source of truth for environment configuration across all data products in the workspace.
+
+### Asset Bundle Structure
+
+The data product is packaged as a single Databricks Asset Bundle defined in `databricks.yml` and consists of:
+
+#### Jobs Configuration (`bundles/jobs.yml`)
+- Contains dbt job definitions optimized for **Databricks Serverless Compute**
+- Ensures cost-effective and scalable execution
+- Configured with appropriate retry policies and error handling
+
+#### Storage Configuration (`bundles/storage.yml`)
+- Implements the recommended data product architecture patterns
+- **Internal Schema**: Houses intermediate transformations and staging tables
+- **External Schema**: Contains finalized datasets ready for consumer access
+- Provides clear data lineage and access control boundaries
+
+### Deployment Commands
+
+#### Bundle Validation
+Always validate your bundle before deployment to catch configuration issues early:
+
+```bash
+databricks bundle validate
+```
+
+#### Development Deployment
+Deploy to the development environment (default target):
+
+```bash
+databricks bundle deploy
+```
+
+#### Quality Assurance Deployment
+Deploy to the QA environment for pre-production testing:
+
+```bash
+databricks bundle deploy -t qa
+```
+
+### Best Practices
+
+1. **Always validate** your bundle before deployment
+2. **Test in development** before promoting to QA
+3. **Monitor job execution** through the Databricks workspace UI
+4. **Review data quality metrics** after each deployment
+5. **Document any schema changes** for downstream consumers
+
+
