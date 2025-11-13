@@ -2,3 +2,5 @@ dbt-duckdb==1.10.0
 
 # extras
 sqlfluff
+fsspec
+adlfs

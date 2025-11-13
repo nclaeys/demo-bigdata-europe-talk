@@ -6,7 +6,7 @@ sources:
     description: Conference data
     meta:
       external_location: >-
-        {{ 'read_csv_auto("TODO/conference-data/raw/{name}.csv", header=1)' if target.name != 'local' else 'read_csv_auto("data/{name}.csv", header=1)' }}
+        {{ 'read_csv_auto("abfs://data/raw/{name}.csv", header=1)' if target.name != 'local' else 'read_csv_auto("data/{name}.csv", header=1)' }}
     tables:
       - name: attendance
         description: One record per attendee per session

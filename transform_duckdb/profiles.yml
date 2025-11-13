@@ -7,6 +7,34 @@ default:
       extensions:
         - httpfs
         - parquet
+# Supports reading, but not writing, to Azure Blob Storage: https://github.com/duckdb/duckdb-azure/issues/44
+# For this reason we use the python fsspec, adlfs libraries instead
+#    azure:
+#      type: duckdb
+#      path: /tmp/dbt.duckdb
+#      threads: 1
+#      secrets:
+#        - type: azure
+#          provider: credential_chain
+#          account_name: "databricksbigdataconf"
+#      settings:
+#        azure_transport_option_type: "curl"
+#      external_root: "az://databricksbigdataconf.blob.core.windows.net/data/duckdb"
+#      extensions:
+#        - azure
+    azure:
+      type: duckdb
+      path: /tmp/dbt.duckdb
+      threads: 1
+      extensions:
+        - httpfs
+        - parquet
+      filesystems:
+        - fs: abfs
+          anon: false
+          account_name: "databricksbigdataconf"
+          account_key: "{{ env_var('DBT_ENV_SECRET_STORAGE_ACCOUNT_KEY') }}"
+      external_root: "abfs://data/duckdb"
     local:
       external_root: "output"
       type: duckdb

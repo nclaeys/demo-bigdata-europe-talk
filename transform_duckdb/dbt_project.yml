@@ -26,13 +26,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
+# Hook of dbt-duckdb to make sure that external data is registered in DuckDB database.
+# Needed if you split up running dbt in multiple runs like first staging models and in a second run the marts.
+#on-run-start:
+#  - "{{ register_upstream_external_models() }}"
+
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_conf_analysis:
-    # Config indicated by + and applies to all files under models/example/
-    stg:
-      +materialized: view
-    marts:
-      +materialized: table
+    +materialized: table
