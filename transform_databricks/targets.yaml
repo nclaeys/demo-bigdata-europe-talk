@@ -16,11 +16,6 @@ targets:
     presets:
       name_prefix: ${bundle.target} # prefix all resource names with dev_ or qa_
     run_as:
-      user_name: ${var.user_name}
-    permissions:
-      - level: CAN_MANAGE
-        user_name: ${var.user_name}
-      - level: CAN_MANAGE
-        group_name: ${var.group_name}
+      service_principal_name: '062768dc-f7e0-45d7-8c11-8bec34a5876d'
     workspace:
       host: https://adb-1366372737668997.17.azuredatabricks.net

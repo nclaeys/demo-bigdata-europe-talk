@@ -10,8 +10,8 @@ default:
     dev:
       host: https://adb-1366372737668997.17.azuredatabricks.net  # This cannot be set with an environment variable.
       http_path: /sql/1.0/warehouses/73b9aa9aa1fa4bc6 # SQL warehouse configuration
-      token: "{{ env_var('DBT_ENV_SECRET_DBX_TOKEN','not-set') }}"
-      schema: "{{ env_var('DBT_ENV_TARGET') }}"
+      token: "{{ env_var('DBT_ACCESS_TOKEN','not-set') }}"
+      schema: "{{ var('target') }}"
       type: databricks
       name: dev
       catalog: bigdataconf

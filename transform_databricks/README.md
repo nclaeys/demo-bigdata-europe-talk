@@ -31,10 +31,10 @@ Test your dbt connection to ensure everything is configured correctly:
 
 ```bash
 # Test dbt connection (when using UV)
-uv run dbt debug --project-dir dbt_project
+uv run dbt debug --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis
 
 # Or if using pip/conda
-dbt debug --project-dir dbt_project
+dbt debug  --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis
 ```
 
 This command will validate your connection to Databricks and confirm that all dependencies are properly installed.
@@ -47,19 +47,19 @@ You can execute dbt transformations directly from your local machine, which is i
 
 ```bash
 # Run all dbt models
-uv run dbt run --project-dir dbt_project
+uv run dbt run --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis --vars 'target: dev'
 
 # Run specific models
-uv run dbt run --project-dir dbt_project --select model_name
+uv run dbt run --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis --vars 'target: dev' --select model_name
 
 # Run models with full refresh
-uv run dbt run --project-dir dbt_project --full-refresh
+uv run dbt run --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis --vars 'target: dev' --full-refresh
 
 # Test data quality
-uv run dbt test --project-dir dbt_project
+uv run dbt test --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis --vars 'target: dev'
 
 # Generate documentation
-uv run dbt docs generate --project-dir dbt_project
+uv run dbt docs generate --project-dir databricks_conf_analysis --profiles-dir databricks_conf_analysis --vars 'target: dev'
 ```
 
 ### Authentication Method
@@ -94,7 +94,7 @@ This project is configured with the following deployment targets:
 
 ### Project Configuration
 
-The deployment targets are centrally defined in the `targets.yaml` file at the project root level, providing a single source of truth for environment configuration across all data products in the workspace.
+The deployment targets are centrally defined in the `targets.yaml` file is in the transform_databricks directory, providing a single source of truth for environment configuration across all data products in the workspace.
 
 ### Asset Bundle Structure
 
@@ -105,11 +105,7 @@ The data product is packaged as a single Databricks Asset Bundle defined in `dat
 - Ensures cost-effective and scalable execution
 - Configured with appropriate retry policies and error handling
 
-#### Storage Configuration (`bundles/storage.yml`)
-- Implements the recommended data product architecture patterns
-- **Internal Schema**: Houses intermediate transformations and staging tables
-- **External Schema**: Contains finalized datasets ready for consumer access
-- Provides clear data lineage and access control boundaries
+The `DBT_ACCESS_TOKEN` environment variable is automatically set by DBX when running the tasks.
 
 ### Deployment Commands
 

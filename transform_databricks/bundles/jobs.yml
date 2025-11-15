@@ -17,9 +17,8 @@ resources:
       tasks:
         - task_key: transform
           dbt_task:
-            project_directory: ./databricks_conf_analysis
-            target: ${bundle.target}
+            project_directory: ./../databricks_conf_analysis
             commands:
             - 'dbt deps'
-            - "dbt run"
+            - "dbt run --vars 'target: ${bundle.target}'"
           environment_key: dbt

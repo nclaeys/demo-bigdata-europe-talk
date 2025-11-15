@@ -3,7 +3,7 @@ bundle:
 
 include:
   - bundles/*.yml
-  - ../../targets.yaml
+  - targets.yaml
 
 variables:
   # Compute variables
