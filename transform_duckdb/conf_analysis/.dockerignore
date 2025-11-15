@@ -21,6 +21,8 @@ target/
 logs/
 resources/
 dags/
+data/
+output/
 
 # Environments
 .env

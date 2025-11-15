@@ -6,6 +6,7 @@ WORKDIR /app
 
 # install dependencies
 RUN dbt deps
+RUN pip install -r /app/requirements.txt
 
 ENV DBT_PROFILES_DIR="/app"
 ENV DBT_PROJECT_DIR="/app"
@@ -13,3 +14,5 @@ ENV DBT_PROJECT_DIR="/app"
 # Using dbt ls makes sure that the dbt cache is populated, this allows dbt to use the cache every time it is started up.
 # This will significantly reduce the startup latency of dbt jobs with many models.
 RUN dbt ls
+
+ENTRYPOINT ["/app/entrypoint.py"]
