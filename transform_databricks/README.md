@@ -66,10 +66,6 @@ uv run dbt docs generate --project-dir databricks_conf_analysis --profiles-dir d
 
 Local development uses **Personal Access Token (PAT)** authentication for secure connection to Databricks. Ensure your PAT token is properly configured in your environment variables.
 
-### Data Source Configuration
-
-If the source data hasn't been set up yet or you need to point to different source tables, update the catalog references in the `sources.yml` file located in the dbt project directory. This allows you to switch between different data environments seamlessly.
-
 ## Working with asset bundles
 
 ### Target Environments
@@ -82,15 +78,7 @@ This project is configured with the following deployment targets:
 - **Job Scheduling**: Jobs are **not** scheduled to run automatically
 - **Usage**: Ideal for experimentation and iterative development
 
-#### Quality Assurance Target (`qa`)
-- **Purpose**: Pre-production validation and stakeholder review
-- **Asset Naming**: All assets are prefixed with `qa`
-- **Job Scheduling**: Jobs are **scheduled** to run automatically
-- **Usage**: Final validation before production deployment
-
-### Data Architecture
-
-**Schema-Level Data Separation**: Data isolation between environments is implemented at the schema level, ensuring clear boundaries between development, testing, and production data while maintaining consistent data structures.
+## Architecture diagram
 
 ### Project Configuration
 
@@ -121,13 +109,6 @@ Deploy to the development environment (default target):
 
 ```bash
 databricks bundle deploy
-```
-
-#### Quality Assurance Deployment
-Deploy to the QA environment for pre-production testing:
-
-```bash
-databricks bundle deploy -t qa
 ```
 
 ### Best Practices
