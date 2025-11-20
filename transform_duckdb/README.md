@@ -32,6 +32,8 @@ dbt run --project-dir conf_analysis --profiles-dir conf_analysis
 
 ## Architecture diagram
 
+![Architecture diagram](./duckdbArchitecture.png)
+
 ## Production setup
 To run the dbt transformations in production, we use an Azure Container App Job.
 The necessary steps to deploy and run the job are:
@@ -39,9 +41,9 @@ The necessary steps to deploy and run the job are:
 2. Deploy the Container App Job using the provided Terraform configuration.
 3. Start the job using the Azure CLI OR schedule it using the built-in scheduling capabilities of Azure Container Jobs.
 
-This setup works well if there are not too many dependencies between different jobs.
-If you want to make more complex workflows, a good first step is using Github Actions to orchestrate multiple jobs.
-When the amount of workflows increases significantly, consider using a more advanced orchestrator like Airflow.
+This setup works well if you do not have 50+ jobs to run and the workflows can be scheduled using a cron trigger.
+If you want to make more complex workflows, a good first step is using Github Actions to trigger multiple jobs.
+When the amount of workflows increases significantly, go for a more advanced orchestrator like Airflow.
 
 ### Starting the job manually
 ```bash

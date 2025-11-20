@@ -9,6 +9,10 @@ Before getting started, ensure you have the following tools installed:
 - [dbt-databricks](https://docs.getdbt.com/reference/warehouse-setups/databricks-setup) adapter
 - [UV](https://docs.astral.sh/uv/) package manager (recommended) or Python 3.8+
 
+## Architecture diagram
+
+![Architecture diagram](./databricksArchitecture.png)
+
 ### Authentication
 
 Start by installing the Databricks CLI if you haven't already, then authenticate to your workspace:
@@ -78,11 +82,9 @@ This project is configured with the following deployment targets:
 - **Job Scheduling**: Jobs are **not** scheduled to run automatically
 - **Usage**: Ideal for experimentation and iterative development
 
-## Architecture diagram
-
 ### Project Configuration
 
-The deployment targets are centrally defined in the `targets.yaml` file is in the transform_databricks directory, providing a single source of truth for environment configuration across all data products in the workspace.
+The deployment targets are centrally defined in the `targets.yaml` file is in the `transform_databricks` directory, providing a single source of truth for environment configuration across all data products in the workspace.
 
 ### Asset Bundle Structure
 
@@ -93,7 +95,11 @@ The data product is packaged as a single Databricks Asset Bundle defined in `dat
 - Ensures cost-effective and scalable execution
 - Configured with appropriate retry policies and error handling
 
-The `DBT_ACCESS_TOKEN` environment variable is automatically set by DBX when running the tasks.
+#### dbt job configuration (`conf_analysis/profiles.yml`)
+Since we use the standard dbt `profiles.yml` file for local development, we use the same file for when running dbt on Databricks.
+The `DBT_ACCESS_TOKEN` environment variable is automatically set by DBX when running the task.
+
+This project is generated using the standard DBX template, for more information please refer to the [DBX documentation](https://learn.microsoft.com/en-us/azure/databricks/jobs/how-to/use-dbt-in-workflows).
 
 ### Deployment Commands
 
