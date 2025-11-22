@@ -1,6 +1,7 @@
 # Demo Bigdata Europe 2025 
 
 This repository contains a practical demonstration of my talk at BigData Conference Europe 2025.
+A pdf of the slide deck can be found [here](./PresentatieBigDataEurope.pdf).
 The focus is on showing how to use DuckDB as well as Databricks on conference data.
 
 Using the conference data I will demonstrate the local development flow as well as how to productionize the solution for both setups.
